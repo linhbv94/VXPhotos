@@ -1,6 +1,6 @@
 # Phát hành VXPhotos
 
-> Cập nhật: 2026-10-08. Quy trình dùng cho các version tiếp theo; không thay bộ cài của release đã publish.
+> Cập nhật: 2026-10-27. Quy trình dùng cho các version tiếp theo; không thay bộ cài của release đã publish.
 
 ## Giao việc cho agent
 
@@ -57,7 +57,7 @@ gh workflow run publish_release.yml --ref main -f tag=vX.Y.Z -f local_qa_passed=
 
 ## Secrets và cài đặt một lần
 
-Repo: [VXPhotos](https://github.com/linhbv94/Photo_Picker). Private updater key ở `.release_keys/`, nằm ngoài Git; giữ backup và dùng lại cho mọi version. Repository secret `TAURI_SIGNING_PRIVATE_KEY` chứa nội dung key; `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` chỉ khi key có password. Không in hoặc đưa key/token vào chat, PR hay assets. `GITHUB_TOKEN` do Actions cấp; không cần thêm PAT cho workflow.
+Repo: [VXPhotos](https://github.com/linhbv94/VXPhotos). Private updater key ở `.release_keys/`, nằm ngoài Git; giữ backup và dùng lại cho mọi version. Repository secret `TAURI_SIGNING_PRIVATE_KEY` chứa nội dung key; `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` chỉ khi key có password. Không in hoặc đưa key/token vào chat, PR hay assets. `GITHUB_TOKEN` do Actions cấp; không cần thêm PAT cho workflow.
 
 Nếu Secrets UI báo lỗi, kiểm tra server/quyền và secret metadata; không tạo key mới để chữa lỗi UI. Không gửi key thay user khi chưa được phép rõ ràng.
 
@@ -78,3 +78,7 @@ Bản bootstrap của app là `1.0.7`. App chưa có updater cần cài thủ c�
 ## Khôi phục metadata draft
 
 Khi GitHub đổi draft thành `untagged...`, xác nhận release ID, tag Git và commit build thành công trước khi khôi phục `tag_name` qua API; giữ nguyên các asset đã ký. Mọi PATCH release phải truyền rõ `tag_name`, `draft` và kiểm tra response. Publish checkout app/config từ tag đã test, dùng release tooling từ commit workflow đã review để sửa metadata mà không đổi tag hay build lại app.
+
+## Bản đã xác minh mới nhất
+
+[1.0.14](https://github.com/linhbv94/VXPhotos/releases/tag/v1.0.14) đã publish Windows x64/Mac Silicon/Mac Intel với icon mới. Xem [QA và giới hạn](release_1_0_14_review.md), [evidence](release_1_0_14_evidence.json). Icon phải được đối chiếu trong executable Windows và cả DMG/archive cập nhật Mac; không dùng cache icon OS để kết luận package.

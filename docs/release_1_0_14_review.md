@@ -12,4 +12,15 @@ Chưa mở GUI native hoặc test old→new updater trong lượt icon này. GUI
 
 ## Checkpoint
 
-Đang chuẩn bị tag; chưa publish. Kết quả CI/package/public sẽ cập nhật sau kiểm chứng.
+Tagv1.0.14 đã push tại `9fde02b51c03be1c93300f49452ed8978bf428dc`; build run40441256131 đang chạy. Chưa publish; package/icon/signature/public sẽ cập nhật sau kiểm chứng.
+
+## Kết quả public
+
+Đã phát hành [VXPhotos 1.0.14](https://github.com/linhbv94/VXPhotos/releases/tag/v1.0.14), stable/latest. Tag `9fde02b51c03be1c93300f49452ed8978bf428dc`; PR #13 đã merge sau Windows PR checks thành công (run 40440734114). Build run **40441256131**, publish run **40443931754** đều success.
+
+- Manifest đủ platform và sáu asset đúng layout; xác minh Minisign cho mọi entry và từ chối gói bị đổi một byte.
+- Mac Silicon/Intel: đúng ARM64/x86_64, app ID/version; strict codesign và checksum DMG đạt. ICNS trong cả archive cập nhật và DMG byte-exact với icon mới.
+- Windows: executable x64, version 1.0.14; bảy payload icon trong PE byte-exact với ICO mới.
+- Sau publish, kiểm tra không đăng nhập: manifest public khớp bản đã xác minh và cả sáu asset HTTP 200. [Evidence](release_1_0_14_evidence.json), [CI checkpoint](release_1_0_14_ci_checkpoint.json).
+
+Job Intel mất thời gian compile release, không phải lỗi đóng gói; không sửa source hoặc retry để vượt gate. Lượt này không mở lại GUI native và không chạy cập nhật từ bản cũ lên bản mới. Không dùng build/package để tuyên bố GUI Windows/Intel hoặc updater E2E đạt. Lượt Codex QA/release Photos đã đóng theo quy ước.

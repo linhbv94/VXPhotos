@@ -1,0 +1,41 @@
+{
+  "status": "completed",
+  "conclusion": "success",
+  "head_sha": "9fde02b51c03be1c93300f49452ed8978bf428dc",
+  "url": "https://github.com/linhbv94/VXPhotos/actions/runs/40441256131",
+  "jobs": [
+    {
+      "name": "prepare",
+      "status": "completed",
+      "conclusion": "success",
+      "active": []
+    },
+    {
+      "name": "build (windows-2022, x86_64-pc-windows-msvc, nsis, windows_x64)",
+      "status": "completed",
+      "conclusion": "success",
+      "active": []
+    },
+    {
+      "name": "build (macos-15-intel, x86_64-apple-darwin, app,dmg, macos_intel)",
+      "status": "completed",
+      "conclusion": "success",
+      "active": []
+    },
+    {
+      "name": "build (macos-15, aarch64-apple-darwin, app,dmg, macos_silicon)",
+      "status": "completed",
+      "conclusion": "success",
+      "active": []
+    },
+    {
+      "name": "validate",
+      "status": "completed",
+      "conclusion": "success",
+      "active": []
+    }
+  ],
+  "repo": "linhbv94/VXPhotos",
+  "run_id": 40441256131,
+  "observed_at_utc": "2026-10-27T03:23:23.455729+00:00"
+}

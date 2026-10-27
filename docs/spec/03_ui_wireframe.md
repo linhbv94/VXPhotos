@@ -1,10 +1,11 @@
-# UI & Wireframe Specification: VXTriage (`_spec3_ui_wireframe`)
+# UI & Wireframe Specification: VXPhotos (`_spec3_ui_wireframe`)
 
 > **Module:** Đặc tả Giao diện & Trải nghiệm Người dùng (UI/UX Wireframe Specs)  
 > **Tài liệu cha:** [00_system_overview.md](00_system_overview.md)  
 > **Ngôn ngữ thiết kế:** Tuân thủ chuẩn [master_theme.md](../../../_summary/master_theme.md) (VX Theme: Slate `#0f1117`, Electric Cyan `#06b6d4`, Amber `#fbbf24`)
 > **Kiến trúc áp dụng:** Option C (Tauri React Shell + Native Platform Quick Preview)  
-> **Trạng thái:** Hoàn chỉnh (V1.1)  
+> **Trạng thái:** Hoàn chỉnh (V1.2)
+> **Ngày cập nhật:** 2026-10-27
 
 ---
 
@@ -324,3 +325,7 @@ Kích hoạt khi nhấp chuột phải vào khoảng trống của lưới ảnh
 │  📁  Mở thư mục khác...                          Cmd+O │
 └────────────────────────────────────────────────────────┘
 ```
+
+## Icon ứng dụng — 2026-10-27
+
+Bản1.0.14 dùng bộ icon mới từ [zicons](../../../_summary/zicons/README.md), prefix `ivxphoto`: ảnh nốt nhạc/bộ chỉnh âm cho VXmp3; ảnh xếp lớp/bộ lọc cho VXPhotos. Mỗi app chỉ dùng bộ riêng tương ứng. macOS dùng ICNS từ nguồn `_icns.png`; Windows dùng ICO7kích thước từ `_trans.png`. Native assets được theo dõi trong `src-tauri/icons/`. Giữ tên app, appID và updater key; không thay engine hoặc hành vi chỉnh sửa file. QA release phải đối chiếu ICNS trong cả DMG/archive cập nhật và ICO resources của executable Windows với source, không dùng cache Dock/Explorer để kết luận package.
