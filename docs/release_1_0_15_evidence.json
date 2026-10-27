@@ -1,0 +1,158 @@
+{
+  "version": "1.0.15",
+  "source_commit": "9922eea78858b144ed264a40dd895b7d16f3b45e",
+  "build_run_id": 40451641196,
+  "state": "public_verified",
+  "sdk_baseline": "27.0",
+  "mac_runner": "xcode-27 (standard)",
+  "intel_cross_build": true,
+  "native_gui": false,
+  "hardware_click_test": false,
+  "hardware_test_skipped_by_user": false,
+  "updater_old_to_new": false,
+  "local_rust_pass": 30,
+  "signature_checks": {
+    "version": "1.0.15",
+    "verified": [
+      {
+        "platform": "windows-x86_64",
+        "name": "vxphotos_1.0.15_windows_x64_setup.exe",
+        "size": 3481301,
+        "sha256": "2f8461185389ae8dc718afa01cf18f191e9ad81d2befaf2b8c5707c07d65544a",
+        "signature": true,
+        "tamper_rejected": true
+      },
+      {
+        "platform": "windows-x86_64-nsis",
+        "name": "vxphotos_1.0.15_windows_x64_setup.exe",
+        "size": 3481301,
+        "sha256": "2f8461185389ae8dc718afa01cf18f191e9ad81d2befaf2b8c5707c07d65544a",
+        "signature": true,
+        "tamper_rejected": true
+      },
+      {
+        "platform": "darwin-aarch64",
+        "name": "vxphotos_1.0.15_macos_silicon.app.tar.gz",
+        "size": 5650463,
+        "sha256": "e328fa7e3ca86304538fffc717e411f8a343824c41c8940268f7ea47c2d92763",
+        "signature": true,
+        "tamper_rejected": true
+      },
+      {
+        "platform": "darwin-aarch64-app",
+        "name": "vxphotos_1.0.15_macos_silicon.app.tar.gz",
+        "size": 5650463,
+        "sha256": "e328fa7e3ca86304538fffc717e411f8a343824c41c8940268f7ea47c2d92763",
+        "signature": true,
+        "tamper_rejected": true
+      },
+      {
+        "platform": "darwin-x86_64",
+        "name": "vxphotos_1.0.15_macos_intel.app.tar.gz",
+        "size": 5965588,
+        "sha256": "7c41e81bd14b208ec14f1b2404fde72020f9cd8bc8a055d5989efc89f912a925",
+        "signature": true,
+        "tamper_rejected": true
+      },
+      {
+        "platform": "darwin-x86_64-app",
+        "name": "vxphotos_1.0.15_macos_intel.app.tar.gz",
+        "size": 5965588,
+        "sha256": "7c41e81bd14b208ec14f1b2404fde72020f9cd8bc8a055d5989efc89f912a925",
+        "signature": true,
+        "tamper_rejected": true
+      }
+    ]
+  },
+  "package_icons": [
+    {
+      "platform": "macos_silicon",
+      "version": "1.0.15",
+      "identifier": "com.vxphotos.desktop",
+      "architecture": "0x100000c",
+      "sdk": "27.0",
+      "icns_sha256": "378aab8ff425efe51c28331d4c013aa78d3d1a29886227334d6378bdef6fa9d1",
+      "icon_matches": true,
+      "strict_codesign": true
+    },
+    {
+      "platform": "macos_intel",
+      "version": "1.0.15",
+      "identifier": "com.vxphotos.desktop",
+      "architecture": "0x1000007",
+      "sdk": "27.0",
+      "icns_sha256": "378aab8ff425efe51c28331d4c013aa78d3d1a29886227334d6378bdef6fa9d1",
+      "icon_matches": true,
+      "strict_codesign": true
+    },
+    {
+      "platform": "windows_x64",
+      "executable": "photo_picker.exe",
+      "pe_machine": "AMD64",
+      "version_resource_contains": "1.0.15",
+      "icon_payloads": 7,
+      "icon_matches": true,
+      "ico_sha256": "d7906a3be2e5ace327a9dd796217488d599677aa935dd5b32a2f312401a8d9d8"
+    }
+  ],
+  "dmgs": [
+    {
+      "platform": "macos_silicon",
+      "checksum": "VALID",
+      "dmg_icns_matches": true,
+      "identifier": "com.vxphotos.desktop",
+      "version": "1.0.15",
+      "strict_codesign": true
+    },
+    {
+      "platform": "macos_intel",
+      "checksum": "VALID",
+      "dmg_icns_matches": true,
+      "identifier": "com.vxphotos.desktop",
+      "version": "1.0.15",
+      "strict_codesign": true
+    }
+  ],
+  "publish_run_id": 40453566744,
+  "release_id": 425044328,
+  "release_url": "https://github.com/linhbv94/VXPhotos/releases/tag/v1.0.15",
+  "public_manifest_exact": true,
+  "public_assets": [
+    {
+      "name": "latest.json",
+      "status": 200,
+      "size": 4540,
+      "sha256": "951f9326aab066c4ea9528543757c3326a8c012dfeb3cdd14f2944cb909fc06d"
+    },
+    {
+      "name": "vxphotos_1.0.15_macos_intel.app.tar.gz",
+      "status": 200,
+      "size": 5965588,
+      "sha256": "7c41e81bd14b208ec14f1b2404fde72020f9cd8bc8a055d5989efc89f912a925"
+    },
+    {
+      "name": "vxphotos_1.0.15_macos_intel.dmg",
+      "status": 200,
+      "size": 6569499,
+      "sha256": "57ea7aa7aec6830cd4ec325483010c929d1afc25d815a4df57782cae53ad19aa"
+    },
+    {
+      "name": "vxphotos_1.0.15_macos_silicon.app.tar.gz",
+      "status": 200,
+      "size": 5650463,
+      "sha256": "e328fa7e3ca86304538fffc717e411f8a343824c41c8940268f7ea47c2d92763"
+    },
+    {
+      "name": "vxphotos_1.0.15_macos_silicon.dmg",
+      "status": 200,
+      "size": 6205044,
+      "sha256": "1e78fd75f8c09f53ed9ff5e31478f7a1d81035b960ad61afb98410c1a37928bd"
+    },
+    {
+      "name": "vxphotos_1.0.15_windows_x64_setup.exe",
+      "status": 200,
+      "size": 3481301,
+      "sha256": "2f8461185389ae8dc718afa01cf18f191e9ad81d2befaf2b8c5707c07d65544a"
+    }
+  ]
+}

@@ -81,4 +81,4 @@ Khi GitHub đổi draft thành `untagged...`, xác nhận release ID, tag Git v�
 
 ## Bản đã xác minh mới nhất
 
-[1.0.14](https://github.com/linhbv94/VXPhotos/releases/tag/v1.0.14) đã publish Windows x64/Mac Silicon/Mac Intel với icon mới. Xem [QA và giới hạn](release_1_0_14_review.md), [evidence](release_1_0_14_evidence.json). Icon phải được đối chiếu trong executable Windows và cả DMG/archive cập nhật Mac; không dùng cache icon OS để kết luận package.
+[1.0.15](https://github.com/linhbv94/VXPhotos/releases/tag/v1.0.15) đã publish Windows x64/Mac Silicon/Mac Intel; hai bản Mac build thật bằng SDK27.0, giữ bộ icon mới. Xem [QA và giới hạn](release_1_0_15_review.md), [evidence](release_1_0_15_evidence.json). Icon phải được đối chiếu trong executable Windows và cả DMG/archive cập nhật Mac; không dùng cache icon OS để kết luận package.
