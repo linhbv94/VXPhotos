@@ -1,6 +1,6 @@
 {
   "name": "vxphotos",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "VXPhotos — Tiện ích desktop cá nhân siêu nhẹ, đa nền tảng phục vụ tuyển chọn, phân loại ảnh theo EXIF, xoay lossless và đổi tên hàng loạt an toàn.",
   "main": "index.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
+    "tauri": "node scripts/tauri_sdk.mjs",
     "version:set": "node scripts/set_version.mjs",
     "release:check": "node scripts/validate_release.mjs",
     "test:updates": "node --test scripts/test_updates.mjs scripts/test_release.mjs scripts/test_release_automation.mjs scripts/test_windows_rotate.mjs",
