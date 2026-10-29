@@ -9,6 +9,7 @@ pub fn move_or_copy_files(
     confirmation_token: Option<String>,
 ) -> Result<OperationResult, String> {
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     if !matches!(action_type.as_str(), "MOVE" | "COPY") {
         return Err("Sai thao tác MOVE/COPY".into());
     }

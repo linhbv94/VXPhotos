@@ -74,9 +74,9 @@ export const BatchActionBar: React.FC<BatchActionBarProps> = ({
         <ActionTooltip text={`${t('rotate90', language)} (R)`} />
       </button>
 
-      <button onClick={onRotateLeft} className="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 transition-all active:scale-95 shrink-0 group relative" aria-label="Xoay trái 90°">
+      <button onClick={onRotateLeft} className="w-8 h-8 rounded-xl flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-white/10 dark:hover:bg-white/20 transition-all active:scale-95 shrink-0 group relative" aria-label={t('rotateLeft90', language)}>
         <RotateCcw className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
-        <ActionTooltip text="Xoay JPEG trái 90° (Shift+R)" />
+        <ActionTooltip text={`${t('rotateLeft90', language)} (Shift+R)`} />
       </button>
       {/* Action 2: Batch Rename (Icon Only) */}
       <button

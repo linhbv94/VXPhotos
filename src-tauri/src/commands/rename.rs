@@ -29,6 +29,7 @@ pub fn preview_batch_rename(
     fallback_to_mtime: Option<bool>,
 ) -> Result<Vec<RenameDiffItem>, String> {
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     let mut groups: BTreeMap<String, Vec<(String, String, String, String, Snapshot)>> =
         BTreeMap::new();
     let mut skipped = Vec::new();
@@ -139,6 +140,7 @@ pub fn preview_batch_rename(
 #[tauri::command]
 pub fn apply_batch_rename(items: Vec<RenameDiffItem>) -> Result<OperationResult, String> {
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     let active: Vec<_> = items.iter().filter(|i| i.skip_reason.is_none()).collect();
     let token = &active
         .first()

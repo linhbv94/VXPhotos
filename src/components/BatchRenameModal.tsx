@@ -66,7 +66,7 @@ export const BatchRenameModal: React.FC<BatchRenameModalProps> = ({
 
         <label className="px-5 py-3 text-xs text-amber-800 dark:text-amber-300 flex gap-2 items-start">
           <input type="checkbox" checked={allowMtime} disabled={isProcessing} onChange={e => onMtimeChange(e.target.checked)} />
-          Cho phép dùng ngày sửa file (mtime) khi thiếu ngày chụp. mtime có thể khác ngày chụp thật.
+          {t('allowMtimeLabel', language)}
         </label>
         {/* Diff List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-1.5 font-mono text-xs">

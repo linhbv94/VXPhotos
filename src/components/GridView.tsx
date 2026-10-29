@@ -2,6 +2,7 @@ import React from 'react';
 import { Camera, Check } from 'lucide-react';
 import { FileItem } from '../types';
 import { tauriApi } from '../services/tauriApi';
+import { t, Language } from '../i18n/translations';
 
 interface GridViewProps {
   items: FileItem[];
@@ -9,6 +10,7 @@ interface GridViewProps {
   markedIds: Set<string>;
   zoomSize: number;
   cacheBust?: number;
+  language?: Language;
   onItemClick: (item: FileItem, e: React.MouseEvent) => void;
   onItemDoubleClick: (item: FileItem) => void;
   onItemContextMenu: (e: React.MouseEvent, item: FileItem) => void;
@@ -22,6 +24,7 @@ export const GridView: React.FC<GridViewProps> = ({
   markedIds,
   zoomSize,
   cacheBust,
+  language = 'vi',
   onItemClick,
   onItemDoubleClick,
   onItemContextMenu,
@@ -71,7 +74,7 @@ export const GridView: React.FC<GridViewProps> = ({
                 onClick={(e) => onToggleMark(item, e)}
                 className="relative w-full overflow-hidden bg-slate-200/60 dark:bg-black/40 flex items-center justify-center cursor-pointer select-none"
                 style={{ height: `${zoomSize * 0.85}px` }}
-                title={isMarked ? 'Bỏ đánh dấu ảnh này' : 'Đánh dấu chọn ảnh này (Click / Phím X)'}
+                title={isMarked ? t('gridUnmarkTitle', language) : t('gridMarkTitle', language)}
               >
                 <img
                   src={`${tauriApi.toAssetUrl(item.path)}?t=${cacheBust}`}
@@ -117,7 +120,7 @@ export const GridView: React.FC<GridViewProps> = ({
                     ? 'bg-cyan-50/90 dark:bg-cyan-500/15 border-cyan-300 dark:border-cyan-400/40 text-cyan-900 dark:text-cyan-200'
                     : 'bg-white dark:bg-[#141821]/95 border-slate-100 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-[#181d28]'
                 }`}
-                title="Bấm để chọn tiêu điểm (Focus)"
+                title={t('gridFocusTitle', language)}
               >
                 <span className="text-xs font-medium text-slate-800 dark:text-slate-200 truncate" title={item.filename}>
                   {item.filename}
@@ -138,8 +141,8 @@ export const GridView: React.FC<GridViewProps> = ({
       {items.length === 0 && (
         <div className="h-full flex flex-col items-center justify-center text-slate-500 dark:text-slate-400 gap-2">
           <Camera className="w-10 h-10 stroke-[1.5] text-slate-400 dark:text-slate-600" />
-          <span className="text-sm font-medium">Không tìm thấy ảnh phù hợp</span>
-          <span className="text-xs text-slate-400 dark:text-slate-600">Thử thay đổi bộ lọc hoặc chọn thư mục khác</span>
+          <span className="text-sm font-medium">{t('noPhotosFound', language)}</span>
+          <span className="text-xs text-slate-400 dark:text-slate-600">{t('noPhotosHint', language)}</span>
         </div>
       )}
     </div>

@@ -271,6 +271,8 @@ pub fn get_subfolders(folder_path: String) -> Result<Vec<SubfolderItem>, String>
 
 #[tauri::command]
 pub fn create_subfolder(parent_path: String, folder_name: String) -> Result<SubfolderItem, String> {
+    let _guard = super::file_safety::MUTATIONS.lock().map_err(|e| e.to_string())?;
+    super::file_safety::ensure_not_updating()?;
     let clean_name = folder_name.trim();
     if clean_name.is_empty()
         || clean_name == "."

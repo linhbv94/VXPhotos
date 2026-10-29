@@ -113,25 +113,25 @@ def convert_app_icons(app_name, icns_src, trans_src, fill_src, icons_dir):
     print(f"✓ All icons for {app_name} generated successfully in {icons_dir}!")
 
 if __name__ == "__main__":
-    # 1. Process VXPhotos (photo_picker)
+    # 1. Process VXPhotos (vxphotos)
     convert_app_icons(
         app_name="VXPhotos",
-        icns_src="/Users/vic/_Work/zTools/photo_picker/vxphoto_icon_icns.png",
-        trans_src="/Users/vic/_Work/zTools/photo_picker/vxphoto_icon_trans.png",
-        fill_src="/Users/vic/_Work/zTools/photo_picker/vxphoto_icon_fill.png",
-        icons_dir="/Users/vic/_Work/zTools/photo_picker/src-tauri/icons"
+        icns_src="/Users/vic/_Work/VXUtilities/vxphotos/vxphoto_icon_icns.png",
+        trans_src="/Users/vic/_Work/VXUtilities/vxphotos/vxphoto_icon_trans.png",
+        fill_src="/Users/vic/_Work/VXUtilities/vxphotos/vxphoto_icon_fill.png",
+        icons_dir="/Users/vic/_Work/VXUtilities/vxphotos/src-tauri/icons"
     )
 
-    # 2. Process VXMedia (media_tool)
+    # 2. Process VXMedia (vxmedia)
     convert_app_icons(
         app_name="VXMedia",
-        icns_src="/Users/vic/_Work/zTools/media_tool/vxmedia_icon_icns.png",
-        trans_src="/Users/vic/_Work/zTools/media_tool/vxmedia_icon_trans.png",
-        fill_src="/Users/vic/_Work/zTools/media_tool/vxmedia_icon_fill.png",
-        icons_dir="/Users/vic/_Work/zTools/media_tool/src-tauri/icons"
+        icns_src="/Users/vic/_Work/VXUtilities/vxmedia/vxmedia_icon_icns.png",
+        trans_src="/Users/vic/_Work/VXUtilities/vxmedia/vxmedia_icon_trans.png",
+        fill_src="/Users/vic/_Work/VXUtilities/vxmedia/vxmedia_icon_fill.png",
+        icons_dir="/Users/vic/_Work/VXUtilities/vxmedia/src-tauri/icons"
     )
 
-    # Also copy icon.icns to media_tool root if needed (media_tool has icon.icns in root)
-    if os.path.exists("/Users/vic/_Work/zTools/media_tool/icon.icns"):
-        shutil.copy2("/Users/vic/_Work/zTools/media_tool/src-tauri/icons/icon.icns", "/Users/vic/_Work/zTools/media_tool/icon.icns")
-        print("Copied updated icon.icns to media_tool root")
+    # Also copy icon.icns to vxmedia root if needed (vxmedia has icon.icns in root)
+    if os.path.exists("/Users/vic/_Work/VXUtilities/vxmedia/icon.icns"):
+        shutil.copy2("/Users/vic/_Work/VXUtilities/vxmedia/src-tauri/icons/icon.icns", "/Users/vic/_Work/VXUtilities/vxmedia/icon.icns")
+        print("Copied updated icon.icns to vxmedia root")

@@ -7,7 +7,7 @@ export interface FileDialog {
   onConfirm?: () => void; onClose: () => void;
 }
 
-export const FileOperationDialog: React.FC<{ dialog: FileDialog | null }> = ({ dialog }) => {
+export const FileOperationDialog: React.FC<{ dialog: FileDialog | null; language?: 'vi' | 'en' }> = ({ dialog, language = 'vi' }) => {
   const panel = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!dialog) return;
@@ -32,7 +32,7 @@ export const FileOperationDialog: React.FC<{ dialog: FileDialog | null }> = ({ d
       <div ref={panel} role="dialog" aria-modal="true" aria-labelledby="file_dialog_title" className="w-full max-w-2xl max-h-[calc(100dvh-32px)] flex flex-col rounded-2xl bg-white dark:bg-[#141821] border border-slate-200 dark:border-white/10 shadow-2xl text-xs">
         <header className="shrink-0 px-5 py-3 flex items-center justify-between border-b border-slate-200 dark:border-white/10">
           <h2 id="file_dialog_title" className="text-sm font-semibold">{dialog.title}</h2>
-          <button aria-label="Đóng / Close" onClick={dialog.onClose} className="rounded-md p-1.5 hover:bg-slate-100 dark:hover:bg-white/10"><X className="w-4 h-4" /></button>
+          <button aria-label={language === 'vi' ? 'Đóng' : 'Close'} onClick={dialog.onClose} className="rounded-md p-1.5 hover:bg-slate-100 dark:hover:bg-white/10"><X className="w-4 h-4" /></button>
         </header>
         <div className="min-h-0 overflow-y-auto p-5 space-y-3">
           <p className="text-amber-800 dark:text-amber-300 whitespace-pre-wrap">{dialog.note}</p>
@@ -45,8 +45,8 @@ export const FileOperationDialog: React.FC<{ dialog: FileDialog | null }> = ({ d
           </ul>
         </div>
         <footer className="shrink-0 flex justify-end gap-2 px-5 py-3 border-t border-slate-200 dark:border-white/10">
-          <button onClick={dialog.onClose} className="px-3 py-2 rounded-lg border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10">{dialog.onConfirm ? 'Hủy / Cancel' : 'Đóng / Close'}</button>
-          {dialog.onConfirm && <button onClick={dialog.onConfirm} className="px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold">{dialog.confirmLabel || 'Xác nhận / Confirm'}</button>}
+          <button onClick={dialog.onClose} className="px-3 py-2 rounded-lg border border-slate-300 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10">{dialog.onConfirm ? (language === 'vi' ? 'Hủy' : 'Cancel') : (language === 'vi' ? 'Đóng' : 'Close')}</button>
+          {dialog.onConfirm && <button onClick={dialog.onConfirm} className="px-3 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold">{dialog.confirmLabel || (language === 'vi' ? 'Xác nhận' : 'Confirm')}</button>}
         </footer>
       </div>
     </div>

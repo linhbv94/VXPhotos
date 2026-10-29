@@ -21,7 +21,7 @@ import { InfoDrawer } from './components/InfoDrawer';
 import { BatchActionBar } from './components/BatchActionBar';
 import { BatchRenameModal } from './components/BatchRenameModal';
 import { ContextMenu, ContextMenuState } from './components/ContextMenu';
-import { SettingsModal } from './components/SettingsModal';
+import { SettingsModal, SettingsTabType } from './components/SettingsModal';
 import { Toast, ToastMessage } from './components/Toast';
 import { t, Language } from './i18n/translations';
 import { addRecentItem } from './services/recent_service';
@@ -40,10 +40,12 @@ export const App: React.FC = () => {
 
   // Theme & Language
   const [theme, setTheme] = useState<'system' | 'dark' | 'light' | 'black'>(() => {
-    return (localStorage.getItem('vxphotos_theme') as any) || 'dark';
+    return (localStorage.getItem('vxphotos_theme') as any) || 'system';
   });
   const [language, setLanguage] = useState<Language>(() => {
-    return (localStorage.getItem('vxphotos_lang') as any) || 'vi';
+    const saved = localStorage.getItem('vxphotos_lang') as Language | null;
+    if (saved === 'vi' || saved === 'en') return saved;
+    return typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('vi') ? 'vi' : 'en';
   });
 
   useEffect(() => {
@@ -82,7 +84,27 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     localStorage.setItem('vxphotos_lang', language);
+    if (typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window) {
+      import('@tauri-apps/api/core')
+        .then(({ invoke }) => invoke('set_app_language', { lang: language }))
+        .catch(() => {});
+    }
   }, [language]);
+
+  useEffect(() => {
+    const onStorage = (event: StorageEvent) => {
+      if (event.key === 'vxphotos_lang' && (event.newValue === 'vi' || event.newValue === 'en')) {
+        setLanguage(event.newValue);
+      } else if (
+        event.key === 'vxphotos_theme' &&
+        (event.newValue === 'system' || event.newValue === 'dark' || event.newValue === 'light' || event.newValue === 'black')
+      ) {
+        setTheme(event.newValue);
+      }
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
 
   // View & Filter States
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
@@ -99,6 +121,7 @@ export const App: React.FC = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
   const [isRenameModalOpen, setIsRenameModalOpen] = useState<boolean>(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const [settingsInitialTab, setSettingsInitialTab] = useState<SettingsTabType | null>(null);
   const [isRenaming, setIsRenaming] = useState<boolean>(false);
   const [diffItems, setDiffItems] = useState<RenameDiffItem[]>([]);
 
@@ -802,7 +825,14 @@ export const App: React.FC = () => {
       <WindowBar
         onOpenFolder={handleOpenFolder}
         onOpenFolderPath={handleOpenRecentFolder}
-        onOpenSettings={() => setIsSettingsOpen(true)}
+        onOpenSettings={() => {
+          setSettingsInitialTab(null);
+          setIsSettingsOpen(true);
+        }}
+        onOpenAbout={() => {
+          setSettingsInitialTab('about');
+          setIsSettingsOpen(true);
+        }}
         onSelectAll={handleSelectAll}
         onUnmarkAll={handleUnmarkAll}
         onRotateCurrent={() => handleRotate(90)}
@@ -835,7 +865,7 @@ export const App: React.FC = () => {
       />
 
       {folderPath && <div className="shrink-0 flex justify-end px-3 py-1 border-b border-slate-200 dark:border-white/5 text-xs">
-        <button onClick={handleRecovery} className="rounded-md px-2 py-1 text-cyan-800 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-white/10">Phục hồi / Undo</button>
+        <button onClick={handleRecovery} className="rounded-md px-2 py-1 text-cyan-800 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-white/10">{t('recoveryBtn', language)}</button>
       </div>}
       {/* 3. Main Stage Layout */}
       <div className="flex-1 flex overflow-hidden relative" onContextMenu={handleCanvasContextMenu}>
@@ -860,6 +890,7 @@ export const App: React.FC = () => {
               markedIds={markedIds}
               zoomSize={zoomSize}
               cacheBust={cacheBust}
+              language={language}
               onItemClick={handleItemClick}
               onItemDoubleClick={handleItemDoubleClick}
               onItemContextMenu={handleItemContextMenu}
@@ -948,7 +979,11 @@ export const App: React.FC = () => {
 
       <SettingsModal
         isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
+        initialTab={settingsInitialTab}
+        onClose={() => {
+          setIsSettingsOpen(false);
+          setSettingsInitialTab(null);
+        }}
         onClearCache={() => {
           setCacheBust(Date.now());
           showToast('success', t('cacheClearedToast', language));
@@ -1006,7 +1041,7 @@ export const App: React.FC = () => {
       />
 
       </div>
-      <FileOperationDialog dialog={fileDialog} />
+      <FileOperationDialog dialog={fileDialog} language={language} />
       <Toast toast={toast} onClose={() => setToast(null)} />
       <AppUpdates language={language} notice />
     </div>

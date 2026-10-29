@@ -87,6 +87,7 @@ pub fn move_to_trash(
 ) -> Result<super::file_safety::OperationResult, String> {
     use super::file_safety::*;
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     let plan = take_plan(
         &confirmation_token.ok_or("Cần preview và xác nhận")?,
         "TRASH",

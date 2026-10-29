@@ -1,3 +1,4 @@
+import {isTauri} from '@tauri-apps/api/core';
 import React, { useState, useRef, useEffect } from 'react';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import {
@@ -15,6 +16,7 @@ interface WindowBarProps {
   onOpenFolder: () => void;
   onOpenFolderPath?: (path: string) => void;
   onOpenSettings: () => void;
+  onOpenAbout?: () => void;
   onSelectAll: () => void;
   onUnmarkAll: () => void;
   onRotateCurrent: () => void;
@@ -30,6 +32,7 @@ export const WindowBar: React.FC<WindowBarProps> = ({
   onOpenFolder,
   onOpenFolderPath,
   onOpenSettings,
+  onOpenAbout,
   onSelectAll,
   onUnmarkAll,
   onRotateCurrent,
@@ -58,7 +61,7 @@ export const WindowBar: React.FC<WindowBarProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!isMac) {
+    if (!isMac && isTauri()) {
       getCurrentWindow().setDecorations(false).catch(() => {});
     }
   }, [isMac]);
@@ -101,32 +104,31 @@ export const WindowBar: React.FC<WindowBarProps> = ({
       { label: t('batchRename', language), shortcut: 'Cmd/Ctrl+R', action: onRenameCurrent },
     ],
     [t('help', language)]: [
-      { label: t('about', language), action: onOpenSettings },
+      { label: t('about', language), action: onOpenAbout || onOpenSettings },
     ],
   };
 
   return (
     <div
       data-tauri-drag-region
+      data-vx-titlebar="true"
+      data-vx-titlebar-profile="standard_32"
       className={`h-8 w-full bg-slate-50/95 dark:bg-[#0f1117]/95 border-b border-slate-200 dark:border-white/5 flex items-center justify-between ${
         isMac ? 'pl-[82px] pr-3' : 'pl-2 pr-2'
       } select-none text-xs shrink-0 z-40 backdrop-blur-md`}
     >
-      {/* Left: Brand (Mac) or Menu Bar (Windows) */}
-      <div className="flex items-center gap-2">
-        {/* macOS Brand: Icon + App Title (System font) */}
-        {isMac && (
-          <div className="flex items-center gap-1.5 shrink-0 cursor-default">
-            <Camera className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
-            <span className="text-slate-900 dark:text-white text-xs font-semibold shrink-0 leading-none">
-              VXPhotos
-            </span>
-          </div>
-        )}
+      {/* Left: Brand + Menus (Windows) */}
+      <div className="flex items-center gap-3">
+        <div data-vx-titlebar-brand="true" className="flex items-center gap-1.5 shrink-0 cursor-default">
+          <Camera data-vx-titlebar-glyph="true" strokeWidth={2} className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
+          <span data-vx-titlebar-title="true" data-vx-titlebar-name className="text-slate-900 dark:text-white text-xs font-semibold tracking-normal leading-4 shrink-0">
+            VXPhotos
+          </span>
+        </div>
 
-        {/* Windows Menus (Icon & Title hidden per desktop UI standard) */}
+        {/* Windows Menus */}
         {!isMac && (
-          <div ref={menuRef} style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties} className="flex items-center gap-0.5 text-slate-700 dark:text-slate-300 shrink-0">
+          <div ref={menuRef} data-vx-windows-menu style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties} className="flex items-center gap-0.5 text-slate-700 dark:text-slate-300 shrink-0">
             {Object.keys(menus).map((menuKey) => (
               <div key={menuKey} className="relative">
                 <button
@@ -173,7 +175,7 @@ export const WindowBar: React.FC<WindowBarProps> = ({
       {/* Right Controls */}
       <div
         style={{ WebkitAppRegion: 'no-drag' } as React.CSSProperties}
-        className="flex items-center gap-1.5"
+        className="flex items-center gap-2"
       >
         <RecentButton
           type="folder"
@@ -188,15 +190,17 @@ export const WindowBar: React.FC<WindowBarProps> = ({
             else onOpenFolder();
           }}
           dropdownAlign="right"
-          emptyLabel="Chưa có thư mục gần đây"
+          emptyLabel={t('emptyRecentFolders', language)}
         />
 
         <button
+          data-vx-titlebar-settings="true"
           onClick={onOpenSettings}
-          className="p-1 rounded hover:bg-slate-200/70 dark:hover:bg-white/10 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors leading-none"
-          title={t('settings', language)}
+          aria-label={t('settings', language)}
+          className="w-7 h-7 rounded-[6px] flex items-center justify-center hover:bg-slate-200/70 dark:hover:bg-white/10 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors leading-none shrink-0"
+          title={`${t('settings', language)} (${isMac ? '⌘,' : 'Ctrl+,'})`}
         >
-          <Settings className="w-3.5 h-3.5" />
+          <Settings strokeWidth={2} className="w-4 h-4 shrink-0" />
         </button>
 
         {/* Windows style window controls (Hidden on macOS) */}

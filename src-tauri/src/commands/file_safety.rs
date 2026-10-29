@@ -13,6 +13,26 @@ use std::{
 use uuid::Uuid;
 
 pub static MUTATIONS: Mutex<()> = Mutex::new(());
+// The mutation mutex closes the race between a live file operation and update preparation.
+static UPDATE_PREPARED: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
+pub fn ensure_not_updating() -> Result<(), String> {
+    if UPDATE_PREPARED.load(std::sync::atomic::Ordering::SeqCst) {
+        Err("update_in_progress: hãy chờ cập nhật ứng dụng hoàn tất".into())
+    } else { Ok(()) }
+}
+#[tauri::command]
+pub fn prepare_app_update(window: tauri::WebviewWindow) -> Result<(), String> {
+    if window.label() != "main" { return Err("scope_mismatch".into()); }
+    let _guard = MUTATIONS.try_lock().map_err(|_| "operation_busy: hãy hoàn tất thao tác tệp trước khi cập nhật")?;
+    UPDATE_PREPARED.store(true, std::sync::atomic::Ordering::SeqCst);
+    Ok(())
+}
+#[tauri::command]
+pub fn cancel_app_update(window: tauri::WebviewWindow) -> Result<(), String> {
+    if window.label() != "main" { return Err("scope_mismatch".into()); }
+    UPDATE_PREPARED.store(false, std::sync::atomic::Ordering::SeqCst);
+    Ok(())
+}
 const STORE: &str = ".vxphotos_operations";
 
 pub fn fault_point(_name: &str) {
@@ -603,6 +623,7 @@ pub fn preview_file_operation(
     degrees: Option<i32>,
 ) -> Result<Preview, String> {
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     if !matches!(action_type.as_str(), "MOVE" | "COPY" | "TRASH" | "ROTATE") {
         return Err("Sai thao tác".into());
     }
@@ -756,6 +777,7 @@ pub fn restore_file_operation(journal_path: String, confirmed: bool) -> Result<(
         return Err("Cần xác nhận phục hồi".into());
     }
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     let mut j = read_journal(Path::new(&journal_path))?;
     if j.status == "restored" {
         return Err("Đã phục hồi".into());

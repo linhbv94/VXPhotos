@@ -2,7 +2,7 @@
 
 > **Module:** Đặc tả Giao diện & Trải nghiệm Người dùng (UI/UX Wireframe Specs)  
 > **Tài liệu cha:** [00_system_overview.md](00_system_overview.md)  
-> **Ngôn ngữ thiết kế:** Tuân thủ chuẩn [master_theme.md](../../../_summary/master_theme.md) (VX Theme: Slate `#0f1117`, Electric Cyan `#06b6d4`, Amber `#fbbf24`)
+> **Ngôn ngữ thiết kế:** Tuân thủ chuẩn [master_theme.md](../../../_summary/standard_docs/master_theme.md) (VX Theme: Slate `#0f1117`, Electric Cyan `#06b6d4`, Amber `#fbbf24`)
 > **Kiến trúc áp dụng:** Option C (Tauri React Shell + Native Platform Quick Preview)  
 > **Trạng thái:** Hoàn chỉnh (V1.2)
 > **Ngày cập nhật:** 2026-10-27
@@ -229,31 +229,33 @@ Trên Windows, hệ điều hành không có global top menu bar. Để giữ tr
    - Khi người dùng nhấn phím `Alt`: các ký tự gạch chân xuất hiện (`Alt+F` cho File, `Alt+E` cho Edit, `Alt+V` cho View, `Alt+T` cho Tools).
    - Cho phép điều hướng dropdown menu hoàn toàn bằng phím mũi tên và Enter.
 3. **Phong cách Thẩm mỹ Menu Dropdown:**
-   - Thiết kế theo chuẩn Glass Dropdown của [master_theme.md](../../../_summary/master_theme.md):
+   - Thiết kế theo chuẩn Glass Dropdown của [master_theme.md](../../../_summary/standard_docs/master_theme.md):
      - Background: `rgba(15, 20, 28, 0.96)` kết hợp viền mờ `border-white/10`.
      - Phông chữ compact: `text-xs` (12px), giãn dòng gọn gàng, bo góc nhẹ `rounded-md`, đổ bóng chiều sâu `shadow-2xl`.
      - Hover item: nền xanh cyan bán trong suốt `hover:bg-cyan-500/15 text-cyan-300`.
 
 ---
 
-### 6.3. Khung Cài đặt & Hỗ trợ (Settings Modal — `Cmd+,` / `Ctrl+,`)
-Kế thừa trực tiếp kiến trúc giao diện Modal và cấu trúc sidebar từ `media_tool`:
-1. **Tab Chung & Giao diện (General):**
-   - Chủ đề màu sắc (Theme: Thích ứng OS, Dark Slate, OLED Black, Light Clean).
-   - Ngôn ngữ giao diện (Tiếng Việt / English).
-   - Hành vi mặc định khi kéo thả vào sidebar (`Move` hoặc `Copy`).
-   - Quy chuẩn định dạng đổi tên tự động (`YYYYMMDD_HHMM_xx.ext`).
-   - Xóa bộ đệm cache metadata và thumbnail.
-2. **Tab Phím tắt (Shortcuts):**
-   - Danh mục tra cứu đầy đủ phím tắt thao tác nhanh (Mark, Quick Look, Xoay DCT, Đổi tên, Finder...).
-3. **Tab Cập nhật (Updates):**
-   - Thẻ hiển thị phiên bản hiện tại v{version} và tích hợp Tauri Updater kiểm tra tự động từ GitHub Releases.
-4. **Tab Giới thiệu (About):**
-   - Biểu tượng ứng dụng VXPhotos Desktop, phiên bản thật, tác giả Bùi Việt Linh, liên kết GitHub Repository.
-   - Giới thiệu ngắn công dụng tuyển chọn/phân loại và công nghệ nền tảng (Tauri 2, Rust Lossless JPEG, Virtualized Grid).
-5. **Tab Ủng hộ tác giả (Support Author):**
+### 6.3. Khung Cài đặt & Hỗ trợ (Settings Modal — `Cmd+,` / `Ctrl+,` — ST-01…ST-10)
+Kế thừa trực tiếp kiến trúc giao diện Modal (`rounded-2xl`, `max-w-2xl`) và cấu trúc sidebar theo `settings_standards.md`:
+1. **Tab Chung (`General` — Ranh giới nghiêm ngặt ST-02):**
+   - **Chỉ chứa đúng 2 nhóm cài đặt theo thứ tự:**
+     1. **Giao diện & Màu sắc (`Theme & Colors`):** `Thích ứng hệ thống` (`System Adaptive`) → `Tối (Dark Slate)` → `Sáng (Light Clean)` → `Đen tuyền (OLED)`.
+     2. **Ngôn ngữ hiển thị (`Display Language`):** 2 nút radio endonym chuẩn **Tiếng Việt** (`vi`) và **English** (`en`), không dùng emoji cờ quốc gia, đổi ngôn ngữ tức thời.
+2. **Tab Lưu trữ & bộ nhớ đệm (`Storage & Cache`):**
+   - Làm mới và xóa bộ đệm cache metadata / thumbnail tạm thời (`Clear Cache`).
+   - Ghi chú quy tắc kéo thả (`Move` / `Copy` với phím `Option`/`Alt`) và quy chuẩn định dạng đổi tên tự động (`YYYYMMDD_HHMM_xx.ext`).
+3. **Tab Phím tắt (`Hotkeys`):**
+   - Danh mục tra cứu đầy đủ 14 phím tắt thao tác nhanh (Mark, Quick Look, Xoay EXIF, Đổi tên, Finder...), hỗ trợ song ngữ `vi`/`en`.
+4. **Tab Cập nhật (`Updates` — AU-01…AU-16):**
+   - Dùng chung controller `useAppUpdater` với thông báo góc dưới bên phải (`bottom-5 right-5`, có CTA trực tiếp `Cập nhật & khởi động lại` / `Update & restart`).
+5. **Tab Giới thiệu (`About`):**
+   - Biểu tượng ứng dụng VXPhotos Desktop, phiên bản thật, tác giả **Bùi Việt Linh**, liên kết GitHub Repository (`https://github.com/linhbv94/VXPhotos`).
+   - Giới thiệu ngắn công dụng tuyển chọn/phân loại và công nghệ nền tảng.
+6. **Tab Ủng hộ tác giả (`Support Author`):**
    - Menu cuối cùng của sidebar với biểu tượng `Coffee` và màu amber nổi bật.
-   - Mã QR VietQR thật đặt giữa thẻ nền trắng tương phản cao, có nhãn VietQR • Napas247 và hướng dẫn quét bằng ứng dụng ngân hàng. Không hiển thị riêng thông tin chuyển khoản hoặc nút sao chép STK; nội dung cuộn được trong cửa sổ nhỏ.
+   - Mã QR VietQR local (`src/assets/qr.png`) đặt giữa thẻ nền trắng tương phản cao, có nhãn VietQR • Napas247 và hướng dẫn quét bằng ứng dụng ngân hàng. Không hiển thị riêng thông tin chuyển khoản hoặc nút sao chép STK; nội dung cuộn được trong cửa sổ nhỏ.
+- **Nút Khôi phục mặc định (`Reset Defaults`):** Đưa giao diện về `system` nhưng giữ nguyên ngôn ngữ người dùng đang chọn.
 
 ---
 
@@ -329,3 +331,26 @@ Kích hoạt khi nhấp chuột phải vào khoảng trống của lưới ảnh
 ## Icon ứng dụng — 2026-10-27
 
 Bản1.0.14 dùng bộ icon mới từ [zicons](../../../_summary/zicons/README.md), prefix `ivxphoto`: ảnh nốt nhạc/bộ chỉnh âm cho VXmp3; ảnh xếp lớp/bộ lọc cho VXPhotos. Mỗi app chỉ dùng bộ riêng tương ứng. macOS dùng ICNS từ nguồn `_icns.png`; Windows dùng ICO7kích thước từ `_trans.png`. Native assets được theo dõi trong `src-tauri/icons/`. Giữ tên app, appID và updater key; không thay engine hoặc hành vi chỉnh sửa file. QA release phải đối chiếu ICNS trong cả DMG/archive cập nhật và ICO resources của executable Windows với source, không dùng cache Dock/Explorer để kết luận package.
+
+## 8. Đối chiếu Quy chuẩn Suite UI (Titlebar, macOS App Menu, Settings, Bilingual, Auto-Update)
+
+- **Titlebar (`TB-01…TB-12`):** Profile `standard_32` (`height: 32px`, `padding-left: 82px`, `padding-right: 12px`). Cụm traffic lights native macOS đặt tại tâm `x = 14, 34, 54; y = 15.5` qua `sync_mac_traffic_lights`. Glyph SVG `16×16` (`strokeWidth = 2`) bắt đầu tại `x = 82`, gap `6px`, tên app `VXPhotos` bắt đầu tại `x = 104` (`12px`, `font-weight: 600`, `line-height: 16px`, `letter-spacing: 0`). Nút Settings ở cuối bên phải là icon-only (`28×28`, radius `6px`, icon `16×16`, cách mép phải `12px`), cách nút `Mở thư mục` `8px`.
+- **macOS App Menu & Native About (`AM-01…AM-14`):** Menu `VXPhotos` trên menubar gồm `About VXPhotos` → separator → `Settings… (⌘,)` → separator → `Services` → separator → `Hide / Hide Others / Show All` → separator → `Quit`. Native About panel hiển thị tên app, version, tác giả `Bùi Việt Linh`, mô tả ngắn và `GitHub: https://github.com/linhbv94/VXPhotos`.
+- **Song ngữ (`BI-01…BI-12`):** Hỗ trợ đầy đủ `vi` và `en`, mặc định lần đầu theo ngôn ngữ hệ điều hành (`vi` → `vi`, còn lại `en`), lưu bền vững trong `localStorage`.
+
+
+## Feedback20261029 — Settings component dùng chung
+
+- Căn cứ: [feedback user](../../../_summary/feedback.md) và [Settings contract](../../../_summary/standard_docs/settings_standards.md). Title VXabc Settings không icon; commonvisual/copy lấy VXMedia.
+- Source dùng lại: [canonical React](../../../_summary/standard_codes/settings_ui/settings_ui.tsx), vendorlocal `src/components/shared/settings_ui.tsx` + CSS + SHAmanifest (Clean ở desktop/src); không runtimeimport sibling.
+- Windowapp dùng shell672×560, header/footer56/sidebar192/body24; maxheight theo viewport. General chỉ2sectionTheme→Language, chỉcapability thật. Updates/About/Support dùngcomponent; version/repo/description/icon/QR làmetadata riêng, tabnghiệpvụ vàconfig/updaterguards giữadapter hiệncó.
+- Nghiệmthu riêng: commoncopy/geometry vi-en, theme/localeapply+readback, radio/tabkeyboard/focustrap/Escape, body cuộn/footerkhôngche; native/Windows/packaged/E2E phải ghi evidence, build/hashPASSkhông tựđạt. About native thamchiếuSearch, khác AboutSettings.
+
+## Cập nhật Feedback 2026-10-29 (Anti UI)
+- Nút `Open Folder...` bỏ dấu 3 chấm (`...`): 'Mở thư mục' (vi) và 'Open Folder' (en) trên WindowBar / RecentButton.
+- Titlebar Windows: Hiển thị SVG Camera + tên app 'VXPhotos' bên trái cạnh menu File/Edit/View/Tools/Help; cụm system min/max/close bên phải sau nút Settings gear.
+
+
+
+### About native — đính chính 2026-10-30
+Theo hợp đồng menu/About root: PNG trong suốt512×512 riêng app (không Dock squircle/default32), layout AppKit theo Search. Credits: Bùi Việt Linh → mô tả vi/en → GitHub URL; footer © 2026 Bùi Việt Linh. All rights reserved. Giữ version thật, không lặp build version. Cần QA bundle/native mới; không coi cargo check là visual PASS.

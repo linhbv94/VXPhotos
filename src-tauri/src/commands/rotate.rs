@@ -22,6 +22,7 @@ pub fn rotate_lossless(
     confirmation_token: Option<String>,
 ) -> Result<RotateResponse, String> {
     let _guard = MUTATIONS.lock().map_err(|e| e.to_string())?;
+    ensure_not_updating()?;
     let plan = take_plan(
         &confirmation_token.ok_or("Cần preview và xác nhận")?,
         "ROTATE",
