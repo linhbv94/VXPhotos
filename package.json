@@ -1,6 +1,6 @@
 {
   "name": "vxphotos",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "VXPhotos — Tiện ích desktop cá nhân siêu nhẹ, đa nền tảng phục vụ tuyển chọn, phân loại ảnh theo EXIF, xoay lossless và đổi tên hàng loạt an toàn.",
   "main": "index.js",
   "type": "module",
@@ -31,6 +31,6 @@
     "@vitejs/plugin-react": "^6.1.2",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
-    "vite": "^8.3.2"
+    "vite": "^8.3.5"
   }
 }
